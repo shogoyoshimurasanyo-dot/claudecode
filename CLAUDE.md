@@ -20,10 +20,12 @@
 4. HTML が壊れていないか確認する（タグの閉じ忘れ、`{{...}}` の置き換え漏れがないこと: `grep -n '{{' public/updates/<日付>.html` が空）。
 5. `git add public/ && git commit -m "daily: <日付> <タイトル>" && git push origin main`。
 
-## トップページ（public/index.html）の動画追記
+## トップページ（public/index.html）の動画入れ替え
 
 - 毎朝 8:00 に、ユーザーの Windows PC で `tools/zanmai-daily/zanmai_daily.py` が動く（タスクスケジューラ）。
-  Excel（シート API の D 列）から未掲載の値を 100 個取り、サーバ上の index.html の STAGE 区間へ追記して FTP で上げ直す。
+  Excel（シート API：C 列＝タイトル、D 列＝品番）と、サーバの `/api/clicks.log`（クリック記録）を読み、
+  クリックの多い動画を残して残りをランダムに入れ替え、STAGE 区間の 100 枠を作り直して FTP で上げ直す。
+- クリック計測のファイルは `tools/zanmai-daily/server_files/` にあり、毎朝のスクリプトがサーバへアップロードする。
 - そのため **サーバ上の index.html が正本**。リポジトリの `public/index.html` は古いことがあり、GitHub Actions からは上書きしない設定にしてある。
 - 設定は `tools/zanmai-daily/config.json`（PC のみ・git 管理外）。手順は `tools/zanmai-daily/README.md`。
 
