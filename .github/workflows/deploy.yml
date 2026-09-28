@@ -1,0 +1,43 @@
+# main に push されたら public/ をレンタルサーバへ FTP(S) でアップロードする。
+# 必要な Secrets（GitHub → Settings → Secrets and variables → Actions）:
+#   FTP_SERVER      例: sv12345.xserver.jp
+#   FTP_USERNAME    FTP アカウント
+#   FTP_PASSWORD    FTP パスワード
+#   FTP_SERVER_DIR  例: /example.com/public_html/   （末尾の / 必須）
+name: Deploy to rental server
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "public/**"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Rebuild update index
+        run: python3 scripts/build_index.py
+
+      - name: Upload via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps          # 非対応のサーバなら ftp に変更
+          local-dir: ./public/
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          # 差分だけ送る（サーバ側に .ftp-deploy-sync-state.json が作られる）
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/_template.html

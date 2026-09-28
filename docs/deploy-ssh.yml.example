@@ -1,0 +1,32 @@
+# SSH(rsync) でデプロイしたい場合の代替ワークフロー。
+# 使うときは .github/workflows/deploy.yml をこの内容で置き換える。
+# 必要な Secrets: SSH_HOST, SSH_PORT(Xserver は 10022), SSH_USER, SSH_PRIVATE_KEY, SSH_TARGET_DIR
+name: Deploy to rental server (SSH)
+
+on:
+  push:
+    branches: [main]
+    paths: ["public/**"]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/build_index.py
+      - name: rsync
+        env:
+          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$KEY" > ~/.ssh/id_deploy && chmod 600 ~/.ssh/id_deploy
+          ssh-keyscan -p "${{ secrets.SSH_PORT }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+          # --delete は付けない（サーバ側だけにあるファイルを消さないため）
+          rsync -avz --exclude '_template.html' \
+            -e "ssh -i ~/.ssh/id_deploy -p ${{ secrets.SSH_PORT }}" \
+            public/ "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_TARGET_DIR }}"
