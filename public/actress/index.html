@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>女優一覧｜三昧タイム</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://zanmai-time.com/actress/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/common.css">
+<style>
+.actress-list{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:10px; }
+.actress-list li{ display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border:1px solid var(--line); border-radius:8px; background:#F7F9FC; }
+.actress-list a{ font-weight:700; text-decoration:none; }
+.actress-list span{ font-size:12px; color:var(--ink-mute); }
+</style>
+</head>
+
+<body>
+<noscript><p style="text-align:center;padding:40px 16px">このサイトの閲覧にはJavaScriptを有効にしてください。</p></noscript>
+
+<template id="site-content">
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="site-logo" href="/">三昧<span>タイム</span></a>
+    <nav class="site-nav">
+      <a href="/">新着</a>
+      <a href="/actress/" aria-current="page">女優一覧</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <nav class="breadcrumb"><a href="/">トップ</a> ／ 女優一覧</nav>
+  <div class="page-head"><h1>女優一覧</h1></div>
+
+  <section class="stage">
+    <ul class="actress-list">
+      <li><a href="/actress/ishikawa-mio/">石川澪</a><span>1本</span></li>
+    </ul>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">&copy; 三昧タイム</div>
+</footer>
+
+</template>
+
+<script src="/assets/js/age-gate.js"></script>
+</body>
+</html>
