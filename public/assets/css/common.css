@@ -119,6 +119,46 @@ a{ color:inherit; }
   color:var(--ink);
 }
 
+/* 説明文のアコーディオン（/assets/js/site.js が長い説明文だけに付ける）
+   閉じているときは --clamp 行まで表示し、「続きを読む」で全文を開く */
+.cell-text.is-collapsible .cell-body{
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:var(--clamp, 3);
+  overflow:hidden;
+}
+.cell-text.is-collapsible.is-open .cell-body{
+  display:block;
+  -webkit-line-clamp:unset;
+}
+.cell-more{
+  display:block;
+  width:100%;
+  margin:2px 0 0;
+  padding:4px 0 0;
+  border:0;
+  border-top:1px dashed var(--line);
+  background:none;
+  font:inherit;
+  font-size:11px;
+  font-weight:500;
+  line-height:1.6;
+  color:var(--accent);
+  text-align:right;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.cell-more::after{ content:" ▼"; font-size:.8em; }
+.cell-more[aria-expanded="true"]::after{ content:" ▲"; }
+.cell-more[hidden]{ display:none; }
+
+/* スマホ：2列 */
+@media (max-width:640px){
+  :root{ --gap-row:22px; --gap-col:8px; }
+  .video-row{ grid-template-columns:repeat(2, 1fr); }
+  .stage{ padding:18px 14px; }
+}
+
 /* ============================================================
    プロフィール（女優ページなど）
    ============================================================ */
@@ -137,7 +177,8 @@ a{ color:inherit; }
 @media (max-width:420px){
   :root{ --gap-row:20px; --gap-col:6px; }
   .cell-text{ font-size:11px; padding:7px 8px; line-height:1.7; }
-  .stage{ padding:18px 14px; }
+  .cell-more{ padding-top:6px; }
+  .stage{ padding:14px 10px; }
   .profile{ padding:16px; }
   .site-nav{ gap:12px; }
 }

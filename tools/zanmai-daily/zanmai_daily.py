@@ -35,6 +35,7 @@ JST = dt.timezone(dt.timedelta(hours=9))
 NOW = dt.datetime.now(JST)
 TODAY = NOW.date()
 TRACK_TAG = '<script src="/assets/js/click-track.js" defer></script>'
+SITE_TAG = '<script src="/assets/js/site.js" defer></script>'  # 説明文の「続きを読む」
 
 
 def log(msg):
@@ -156,6 +157,8 @@ def rebuild_page(page, items_html, cfg):
     a, b = stage_bounds(page, cfg)
     body = "\n" + "\n".join("      " + h.strip() for h in items_html) + "\n    "
     page = page[:a] + body + page[b:]
+    if "/assets/js/site.js" not in page:
+        page = page.replace("</body>", f"{SITE_TAG}\n</body>", 1)
     if cfg.get("tracking", True) and "click-track.js" not in page:
         page = page.replace("</body>", f"{TRACK_TAG}\n</body>", 1)
     return page
