@@ -20,6 +20,13 @@
 4. HTML が壊れていないか確認する（タグの閉じ忘れ、`{{...}}` の置き換え漏れがないこと: `grep -n '{{' public/updates/<日付>.html` が空）。
 5. `git add public/ && git commit -m "daily: <日付> <タイトル>" && git push origin main`。
 
+## トップページ（public/index.html）の動画追記
+
+- 毎朝 8:00 に、ユーザーの Windows PC で `tools/zanmai-daily/zanmai_daily.py` が動く（タスクスケジューラ）。
+  Excel（シート API の D 列）から未掲載の値を 100 個取り、サーバ上の index.html の STAGE 区間へ追記して FTP で上げ直す。
+- そのため **サーバ上の index.html が正本**。リポジトリの `public/index.html` は古いことがあり、GitHub Actions からは上書きしない設定にしてある。
+- 設定は `tools/zanmai-daily/config.json`（PC のみ・git 管理外）。手順は `tools/zanmai-daily/README.md`。
+
 ## やってはいけないこと
 
 - 既存の更新ファイルを消す・上書きする（明示的に頼まれた場合を除く）。

@@ -1,0 +1,23 @@
+{
+  "excel_path": "C:\\Users\\shogo\\Desktop\\claude\\zanmai-time",
+  "sheet": "API",
+  "column": "D",
+  "start_row": 2,
+  "count": 100,
+
+  "start_marker": "STAGE START",
+  "end_marker": "STAGE END",
+  "item_template": "      <li>\n        <div class=\"video-cell\">\n          <iframe src=\"https://www.dmm.co.jp/litevideo/-/part/=/affi_id=NUBh0jCpE9kc-001/cid={value}/size=1280_720/\"\n                  scrolling=\"no\" frameborder=\"0\" allowfullscreen\n                  allow=\"autoplay; fullscreen; encrypted-media; picture-in-picture\"\n                  referrerpolicy=\"no-referrer-when-downgrade\" loading=\"lazy\"></iframe>\n        </div>\n      </li>",
+
+  "local_copy": "",
+  "keep_backups": 30,
+
+  "ftp": {
+    "protocol": "ftps",
+    "host": "svXXXXX.xserver.jp",
+    "port": 21,
+    "user": "FTPユーザー名",
+    "password": "FTPパスワード",
+    "remote_html": "/ドメイン名/public_html/index.html"
+  }
+}
