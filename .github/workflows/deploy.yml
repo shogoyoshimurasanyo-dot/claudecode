@@ -13,6 +13,11 @@ on:
       - "public/**"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
+    inputs:
+      upload_top_index:
+        description: "トップの index.html も上書きする（毎朝の動画入れ替えの結果が消えるので、見た目を直したときだけ）"
+        type: boolean
+        default: false
 
 concurrency:
   group: deploy
@@ -46,3 +51,18 @@ jobs:
           # ↑ トップの index.html だけは PC の tools/zanmai-daily が毎朝サーバ上で直接更新するため、
           #   ここから上書きしない（上書きすると入れ替えた動画が消える）。
           #   exclude はファイル名だけでも一致するので、2 行目でサブフォルダの index.html を除外対象から戻している。
+
+      # 手動実行で upload_top_index にチェックしたときだけ、トップの index.html を上書きする
+      # （%2F で FTP_SERVER_DIR を絶対パスとして扱う＝上の FTP-Deploy-Action と同じ場所）
+      - name: Upload top index.html
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.upload_top_index }}
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
+        run: |
+          curl --fail --silent --show-error --ssl-reqd \
+            --user "$FTP_USERNAME:$FTP_PASSWORD" \
+            -T public/index.html "ftp://$FTP_SERVER/%2F${FTP_SERVER_DIR#/}"
+          echo "index.html をアップロードしました"
