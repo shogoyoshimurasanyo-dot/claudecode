@@ -1,0 +1,4 @@
+# クリックログはブラウザから見えないようにする（FTP では読める）
+<FilesMatch "\.log$">
+  Require all denied
+</FilesMatch>

@@ -41,3 +41,6 @@ jobs:
             **/.git*
             **/.git*/**
             **/_template.html
+            index.html
+          # ↑ トップの index.html は PC の tools/zanmai-daily が毎朝サーバ上で直接更新するため、
+          #   ここから上書きしない（上書きすると追記した動画が消える）
