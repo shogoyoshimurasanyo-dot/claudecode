@@ -75,6 +75,34 @@ a{ color:inherit; }
 .page-head p{ margin:6px 0 0; color:var(--ink-mute); font-size:14px; }
 
 /* ============================================================
+   広告（PR）表記（トップ）
+   ============================================================ */
+.pr-note{
+  margin:20px 0 0;
+  padding:10px 14px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  font-size:12px;
+  line-height:1.8;
+  color:var(--ink-mute);
+}
+.pr-badge{
+  display:inline-block;
+  margin-right:6px;
+  padding:0 6px;
+  border:1px solid var(--ink-mute);
+  border-radius:3px;
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  font-weight:500;
+  line-height:1.6;
+  letter-spacing:.06em;
+  vertical-align:1px;
+}
+.pr-note a{ margin-left:4px; color:var(--accent); white-space:nowrap; }
+
+/* ============================================================
    動画差し込みエリア
    ============================================================ */
 .stage{
@@ -193,6 +221,11 @@ a{ color:inherit; }
   color:var(--ink-mute);
 }
 .foot a{ color:var(--ink-mute); }
+.foot-links{ display:flex; flex-wrap:wrap; gap:6px 18px; margin:0 0 10px; font-family:var(--font-body); font-size:12.5px; }
+.foot-links a{ text-decoration:underline; text-underline-offset:3px; }
+.foot-links a:hover{ color:var(--ink); }
+.foot-pr{ margin:0 0 6px; font-family:var(--font-body); font-size:11.5px; }
+.foot-copy{ margin:0; }
 
 /* ============================================================
    年齢確認モーダル（age-gate.js が生成）
