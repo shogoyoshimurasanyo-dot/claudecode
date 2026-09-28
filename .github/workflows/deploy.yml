@@ -42,5 +42,7 @@ jobs:
             **/.git*/**
             **/_template.html
             index.html
-          # ↑ トップの index.html は PC の tools/zanmai-daily が毎朝サーバ上で直接更新するため、
-          #   ここから上書きしない（上書きすると追記した動画が消える）
+            !*/**/index.html
+          # ↑ トップの index.html だけは PC の tools/zanmai-daily が毎朝サーバ上で直接更新するため、
+          #   ここから上書きしない（上書きすると入れ替えた動画が消える）。
+          #   exclude はファイル名だけでも一致するので、2 行目でサブフォルダの index.html を除外対象から戻している。
