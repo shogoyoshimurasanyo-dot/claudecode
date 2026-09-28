@@ -1,0 +1,195 @@
+/* ============================================================
+   三昧タイム 共通スタイル（全ページで読み込む）
+   ============================================================ */
+:root{
+  --ink:        #12192B;
+  --ink-mute:   #5A6478;
+  --paper:      #F3F5F8;
+  --card:       #FFFFFF;
+  --line:       #DCE1EA;
+  --accent:     #1F5EFF;
+  --danger:     #D93A3A;
+
+  --font-body: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --wrap: 880px;
+  --radius: 10px;
+
+  /* 動画の縦横比（DMMサンプル再生プレイヤー＝4/3）
+     正本: knowledge/config.json の player.video_ratio */
+  --video-ratio: 4 / 3;
+
+  /* 動画どうしの間隔（縦 / 横） */
+  --gap-row: 26px;
+  --gap-col: 10px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; }
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:15px;
+  line-height:1.9;
+  letter-spacing:.01em;
+}
+a{ color:inherit; }
+
+.wrap{
+  width:100%;
+  max-width:var(--wrap);
+  margin-inline:auto;
+  padding:0 20px;
+}
+
+/* ============================================================
+   ヘッダー
+   ============================================================ */
+.site-head{
+  background:var(--card);
+  border-bottom:1px solid var(--line);
+}
+.site-head .wrap{
+  display:flex; align-items:center; justify-content:space-between;
+  height:56px; gap:16px;
+}
+.site-logo{
+  font-weight:700; font-size:18px; letter-spacing:.06em; text-decoration:none;
+}
+.site-logo span{ color:var(--accent); }
+.site-nav{ display:flex; gap:18px; font-size:13px; }
+.site-nav a{ color:var(--ink-mute); text-decoration:none; }
+.site-nav a:hover,.site-nav a[aria-current="page"]{ color:var(--ink); }
+
+/* ============================================================
+   ページ見出し・パンくず
+   ============================================================ */
+.breadcrumb{ margin:20px 0 0; font-size:12px; color:var(--ink-mute); }
+.breadcrumb a{ color:var(--ink-mute); }
+.page-head{ margin:16px 0 0; }
+.page-head h1{ margin:0; font-size:clamp(21px,3.4vw,27px); line-height:1.5; }
+.page-head p{ margin:6px 0 0; color:var(--ink-mute); font-size:14px; }
+
+/* ============================================================
+   動画差し込みエリア
+   ============================================================ */
+.stage{
+  margin:24px 0 56px;
+  padding:24px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+}
+.stage-title{ margin:0 0 16px; font-size:16px; }
+
+/* 動画グリッド：3列固定。<li> を足すだけで折り返す */
+.video-row{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:var(--gap-row) var(--gap-col);
+  margin:0; padding:0; list-style:none;
+}
+.video-cell{
+  position:relative;
+  aspect-ratio:var(--video-ratio);
+  overflow:hidden;
+  border-radius:8px;
+  background:#0C1120;
+}
+.video-cell video,
+.video-cell iframe,
+.video-cell img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  border:0; object-fit:cover; display:block;
+}
+.video-cell > div{ position:absolute; inset:0; width:100%; height:100%; }
+
+.cell-text{
+  margin:8px 0 0;
+  padding:9px 10px;
+  background:#F7F9FC;
+  border-radius:6px;
+  font-size:11.5px;
+  line-height:1.75;
+  color:var(--ink);
+}
+
+/* ============================================================
+   プロフィール（女優ページなど）
+   ============================================================ */
+.profile{
+  margin:24px 0 0;
+  padding:20px 24px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  font-size:14px;
+}
+.profile dl{ display:grid; grid-template-columns:7em 1fr; gap:6px 12px; margin:0; }
+.profile dt{ color:var(--ink-mute); }
+.profile dd{ margin:0; }
+
+@media (max-width:420px){
+  :root{ --gap-row:20px; --gap-col:6px; }
+  .cell-text{ font-size:11px; padding:7px 8px; line-height:1.7; }
+  .stage{ padding:18px 14px; }
+  .profile{ padding:16px; }
+  .site-nav{ gap:12px; }
+}
+
+/* ============================================================
+   フッター
+   ============================================================ */
+.foot{
+  padding:0 0 56px;
+  font-family:var(--font-mono);
+  font-size:11px;
+  color:var(--ink-mute);
+}
+.foot a{ color:var(--ink-mute); }
+
+/* ============================================================
+   年齢確認モーダル（age-gate.js が生成）
+   ============================================================ */
+.age-gate{
+  position:fixed; inset:0; z-index:1000;
+  display:flex; align-items:center; justify-content:center;
+  padding:16px;
+  background:rgba(12,17,32,.92);
+}
+.age-gate[hidden]{ display:none; }
+.age-box{
+  width:100%; max-width:420px;
+  background:var(--card);
+  border-radius:14px;
+  padding:32px 24px 28px;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+.age-mark{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:64px; height:64px; border-radius:50%;
+  border:3px solid var(--danger); color:var(--danger);
+  font-weight:700; font-size:22px; margin-bottom:14px;
+}
+.age-box h2{ margin:0 0 10px; font-size:19px; line-height:1.5; }
+.age-box p{ margin:0 0 22px; font-size:13.5px; color:var(--ink-mute); line-height:1.8; }
+.age-actions{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.age-actions button{
+  font:inherit; font-weight:700; font-size:15px;
+  padding:12px 8px; border-radius:999px; cursor:pointer;
+}
+.age-yes{ background:var(--accent); color:#fff; border:0; }
+.age-no { background:#fff; color:var(--ink); border:1px solid var(--line); }
+.age-denied{ display:none; margin:18px 0 0 !important; color:var(--danger) !important; font-weight:700; }
+.age-gate.is-denied .age-denied{ display:block; }
+.age-gate.is-denied .age-actions{ display:none; }
+
+@media (prefers-reduced-motion:reduce){
+  *{ animation:none !important; transition:none !important; }
+}
